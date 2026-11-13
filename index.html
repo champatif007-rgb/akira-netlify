@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="theme-color" content="#050819" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%234f7bff'/%3E%3Cstop offset='1' stop-color='%239a5cff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='16' cy='16' r='14' fill='url(%23g)'/%3E%3C/svg%3E"
+    />
+    <title>Akira AI</title>
+    <meta
+      name="description"
+      content="An all-in-one AI study and conversation companion powered by Gemini."
+    />
+    <meta property="og:title" content="Akira AI" />
+    <meta
+      property="og:description"
+      content="An all-in-one AI study and conversation companion powered by Gemini."
+    />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;800&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <canvas id="sky"></canvas>
+    <div class="aur a1"></div>
+    <div class="aur a2"></div>
+    <div class="aur a3"></div>
+    <aside id="side">
+      <div class="grp">
+        <div class="brand">
+          <div class="logo"><i></i></div>
+          Akira AI<span class="sp"></span>
+          <svg class="si" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+        </div>
+        <div class="tiles">
+          <button class="btn tile main" id="newc">
+            <svg class="si" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" /></svg>
+            <span>New chat</span>
+          </button>
+          <button class="btn tile" id="focus">
+            <svg class="si" viewBox="0 0 24 24">
+              <circle cx="12" cy="13" r="8" />
+              <path d="M12 9v4l2.5 2M9 2h6" />
+            </svg>
+            <span id="ft">Focus 25:00</span>
+            <div id="fbar"><i></i></div>
+          </button>
+        </div>
+      </div>
+      <div class="grp">
+        <button type="button" class="btn chatstab" id="chatstab" aria-haspopup="dialog" aria-expanded="false">
+          <svg class="si" viewBox="0 0 24 24">
+            <path d="M21 12a8 8 0 0 1-11.5 7.2L4 20l1-4.5A8 8 0 1 1 21 12z" />
+          </svg>
+          <span class="chatstab-tx">
+            <b>Your chats</b>
+            <small id="chatsub">Open my chats</small>
+          </span>
+          <span class="chatcnt" id="chatcnt">0</span>
+          <svg class="si chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6" /></svg>
+        </button>
+      </div>
+      <div class="grp push">
+        <h4>Today</h4>
+        <div class="today">
+          <button class="rngbtn" id="sgoal" title="Daily goal (tap to change)">
+            <svg viewBox="0 0 56 56">
+              <circle cx="28" cy="28" r="22" class="rb" />
+              <circle id="sring" cx="28" cy="28" r="22" class="rf" />
+            </svg>
+            <b id="spts">0</b>
+          </button>
+          <div class="tx">
+            <div>🔥 <b id="sstreak">0</b> day streak</div>
+            <div id="sexam" class="mut"></div>
+          </div>
+        </div>
+        <div class="exrow">
+          <input
+            type="text"
+            id="exdt"
+            class="dateinp"
+            inputmode="numeric"
+            autocomplete="off"
+            placeholder="Type date: 25/12/2026"
+            aria-label="Exam date"
+          />
+          <label class="calbtn" title="Pick from calendar">
+            <svg viewBox="0 0 24 24">
+              <rect x="3" y="5" width="18" height="16" rx="3" />
+              <path d="M3 10h18M8 3v4M16 3v4" />
+            </svg>
+            <input type="date" id="exd" aria-label="Pick exam date" />
+          </label>
+        </div>
+      </div>
+      <div class="grp">
+        <h4>Colours</h4>
+        <div class="sw" id="sw"></div>
+        <button class="btn wide blue" id="save">
+          <svg class="si" viewBox="0 0 24 24"><path d="M12 4v11M7 11l5 5 5-5M5 20h14" /></svg>
+          <span>Save chat</span>
+        </button>
+        <button class="btn wide purple" id="clr">
+          <svg class="si" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13" /></svg>
+          <span>Clear chats</span>
+        </button>
+      </div>
+    </aside>
+    <main>
+      <div class="top">
+        <button class="pill" id="menu" aria-label="Toggle sidebar">
+          <svg class="si" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+        </button>
+        <div class="mini">
+          <div class="orb"><b></b><u></u></div>
+        </div>
+        <div class="sp"></div>
+        <button class="tool round" id="voiceToggle" title="Start voice chat" aria-label="Start voice chat">
+          <svg class="si" viewBox="0 0 24 24">
+            <rect x="9" y="2" width="6" height="13" rx="3" />
+            <path d="M5 10a7 7 0 0 0 14 0M12 17v5m-4 0h8" />
+          </svg>
+        </button>
+        <button class="tool round" id="notesb" title="Saved notes" aria-label="Saved notes">
+          <svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z" /></svg>
+        </button>
+        <button class="tool round" id="fmtb" title="Page format" aria-label="Page format">
+          <b class="aa">Aa</b>
+        </button>
+        <button class="tool round" id="theme" title="Dark / light" aria-label="Toggle theme">
+          <svg class="si" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="9" />
+            <path d="M12 3v18a9 9 0 0 0 0-18z" fill="currentColor" />
+          </svg>
+        </button>
+      </div>
+      <section class="voice-panel" id="voicePanel" role="dialog" aria-modal="true" aria-label="Akira voice chat">
+        <div class="voice-top">
+          <button class="voice-close" id="voiceClose" aria-label="Close voice chat">×</button>
+          <div class="voice-brand"><span class="voice-brand-dot"></span> Akira <span>VOICE</span></div>
+          <div class="voice-top-spacer"></div>
+        </div>
+        <div class="voice-stage">
+          <div class="voice-orb-wrap" id="voiceOrbWrap">
+            <div class="voice-orb-halo"></div>
+            <div class="voice-orb-ring"></div>
+            <div class="voice-orb"><i></i><b></b></div>
+          </div>
+          <div class="voice-copy">
+            <strong id="voiceHeadline">Akira is listening</strong>
+            <small id="voiceStatus">Start talking whenever you're ready</small>
+          </div>
+          <div class="voice-transcript" id="voiceTranscript">Your conversation will appear here</div>
+        </div>
+        <div class="voice-bottom">
+          <div class="voice-hint">Speak naturally. I'm here with you.</div>
+          <div class="voice-controls">
+            <button class="voice-control mute" id="voiceMute" aria-label="Mute microphone" title="Mute microphone">
+              <span class="voice-mic-icon">⌁</span><small>Mute</small>
+            </button>
+            <button class="voice-control end" id="voiceStop" aria-label="End voice chat" title="End voice chat">
+              <span>×</span><small>End</small>
+            </button>
+          </div>
+        </div>
+      </section>
+      <div id="feed"></div>
+      <div class="modes" id="modes"></div>
+      <div class="box">
+        <div id="att" style="display:none;font-size:13px;color:var(--mute);padding:0 10px">
+          Photo attached
+          <button class="ic" style="width:26px;height:26px;font-size:14px" id="rm" aria-label="Remove photo">×</button>
+        </div>
+        <textarea id="q" rows="1"></textarea>
+        <div class="bar">
+          <button class="tool" id="cam" title="Attach a photo" aria-label="Attach a photo">
+            <svg viewBox="0 0 24 24">
+              <path d="M14.5 4h-5L8 6H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-3z" />
+              <circle cx="12" cy="13" r="3.5" />
+            </svg>
+          </button>
+          <button class="tool" id="mic" title="Speak your question" aria-label="Speak your question">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3z" />
+              <path d="M5 11a7 7 0 0 0 14 0M12 18v3" />
+            </svg>
+          </button>
+          <span class="vr"></span>
+          <label class="opt" title="Level">
+            <svg viewBox="0 0 24 24">
+              <path d="M2 9l10-5 10 5-10 5z" />
+              <path d="M6 11v5c0 1.5 3 3 6 3s6-1.5 6-3v-5" />
+            </svg>
+            <select hidden class="native-opt" tabindex="-1" id="level" aria-label="Student level">
+              <option value="Grades 1 to 3">Grades 1 to 3</option>
+              <option value="Grades 4 to 6">Grades 4 to 6</option>
+              <option value="Grades 7 to 9" selected>Grades 7 to 9</option>
+              <option value="Grades 10 to 12">Grades 10 to 12</option>
+              <option value="College">College</option>
+            </select>
+            <button
+              type="button"
+              class="akira-select-trigger"
+              data-select="level"
+              aria-haspopup="listbox"
+              aria-expanded="false"
+              aria-label="Student level"
+            >
+              <span class="selected-value"></span>
+              <svg class="select-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5" /></svg>
+            </button>
+            <div class="akira-select-menu" data-menu="level" role="listbox" aria-label="Student level"></div>
+          </label>
+          <label class="opt" title="Subject">
+            <svg viewBox="0 0 24 24">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z" />
+              <path d="M4 19.5V21h16" />
+            </svg>
+            <select hidden class="native-opt" tabindex="-1" id="subject" aria-label="Subject">
+              <option value="Any subject">Any subject</option>
+              <option value="Math">Math</option>
+              <option value="Science">Science</option>
+              <option value="English">English</option>
+              <option value="Hindi">Hindi</option>
+              <option value="Social science">Social science</option>
+              <option value="Computer science">Computer science</option>
+              <option value="Off-topic / Casual">Off-topic / Casual</option>
+            </select>
+            <button
+              type="button"
+              class="akira-select-trigger"
+              data-select="subject"
+              aria-haspopup="listbox"
+              aria-expanded="false"
+              aria-label="Subject"
+            >
+              <span class="selected-value"></span>
+              <svg class="select-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5" /></svg>
+            </button>
+            <div class="akira-select-menu" data-menu="subject" role="listbox" aria-label="Subject"></div>
+          </label>
+          <label class="opt" title="Answer language">
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="9" />
+              <path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18" />
+            </svg>
+            <select hidden class="native-opt" tabindex="-1" id="lang" aria-label="Answer language">
+              <option value="Same as my question">Same as my question</option>
+              <option value="English">English</option>
+              <option value="Hindi">Hindi</option>
+              <option value="Hinglish">Hinglish</option>
+            </select>
+            <button
+              type="button"
+              class="akira-select-trigger"
+              data-select="lang"
+              aria-haspopup="listbox"
+              aria-expanded="false"
+              aria-label="Answer language"
+            >
+              <span class="selected-value"></span>
+              <svg class="select-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5" /></svg>
+            </button>
+            <div class="akira-select-menu" data-menu="lang" role="listbox" aria-label="Answer language"></div>
+          </label>
+          <button type="button" class="chip" id="hint" aria-pressed="false">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.8.8 1 1.5 1 2.5h6c0-1 .2-1.7 1-2.5A6 6 0 0 0 12 3z"
+              />
+            </svg>
+            Hint mode
+          </button>
+          <button type="button" class="chip on" id="pics" aria-pressed="true">
+            <svg viewBox="0 0 24 24">
+              <rect x="3" y="3" width="18" height="18" rx="3" />
+              <circle cx="9" cy="9" r="1.8" />
+              <path d="M21 16l-5-5-8 8" />
+            </svg>
+            Diagrams
+          </button>
+          <span style="flex:1"></span>
+          <button class="go" id="ask" title="Ask" aria-label="Send message">
+            <i class="stopi"></i>
+            <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7" /></svg>
+          </button>
+        </div>
+      </div>
+      <p class="note">Akira can make mistakes. Check important answers with your teacher or textbook. Chats stay on this device.</p>
+    </main>
+    <div id="notes" role="dialog" aria-label="Saved notes">
+      <span class="grab"></span>
+      <div class="sh-head">
+        <b>Saved notes</b>
+        <button class="tool round" id="nclose" title="Close" aria-label="Close notes">
+          <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" /></svg>
+        </button>
+      </div>
+      <div id="nlist"></div>
+      <div class="nrow">
+        <button class="btn" id="nexp">Export notes</button>
+        <button class="btn" id="nbk">Backup</button>
+        <button class="btn" id="nrs">Restore</button>
+      </div>
+      <input type="file" id="nfile" accept="application/json" hidden />
+    </div>
+    <div id="mychats" role="dialog" aria-label="My chats">
+      <span class="grab"></span>
+      <div class="sh-head">
+        <div class="mc-title">
+          <b>My chats</b>
+          <span class="chatcnt" id="mccnt">0</span>
+        </div>
+        <button class="tool round" id="mcclose" title="Close" aria-label="Close my chats">
+          <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" /></svg>
+        </button>
+      </div>
+      <div id="chats"></div>
+      <div class="nrow">
+        <button class="btn main" id="mcnew">New chat</button>
+        <button class="btn" id="mcclr">Clear all</button>
+      </div>
+    </div>
+    <div id="mdl">
+      <div class="mcard">
+        <div id="mbody"></div>
+        <div class="mrow">
+          <button class="btn" id="mskip">Skip</button>
+          <span class="mdots" id="mdots"></span>
+          <button class="btn main" id="mnext">Next</button>
+        </div>
+      </div>
+    </div>
+    <div id="bd"></div>
+    <div id="fmt" role="dialog" aria-label="Page format">
+      <span class="grab"></span>
+      <div class="sh-head">
+        <b>Page format</b>
+        <button class="tool round" id="fclose" title="Close" aria-label="Close page format">
+          <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" /></svg>
+        </button>
+      </div>
+      <label class="fr"><span>Text size <em id="fsv">16px</em></span><input type="range" id="fs" min="14" max="22" step="1" /></label>
+      <div class="fr">
+        <span>Line spacing</span>
+        <div class="seg" data-k="lh">
+          <button data-v="1.4">Compact</button>
+          <button data-v="1.6">Normal</button>
+          <button data-v="1.85">Relaxed</button>
+        </div>
+      </div>
+      <div class="fr">
+        <span>Font</span>
+        <div class="seg" data-k="ff">
+          <button data-v="modern">Modern</button>
+          <button data-v="clean">Clean</button>
+          <button data-v="serif">Serif</button>
+        </div>
+      </div>
+      <div class="fr">
+        <span>Answer style</span>
+        <div class="seg" data-k="layout">
+          <button data-v="bubbles">Bubbles</button>
+          <button data-v="plain">Plain page</button>
+        </div>
+      </div>
+      <div class="fr">
+        <span>Cursor effect</span>
+        <div class="seg" data-k="cur">
+          <button data-v="glow">Glow</button>
+          <button data-v="off">Off</button>
+        </div>
+      </div>
+      <div class="fr">
+        <span>Effects</span>
+        <div class="seg" data-k="fx">
+          <button data-v="full">Full</button>
+          <button data-v="lite">Light</button>
+        </div>
+      </div>
+      <button class="btn" id="frst" style="justify-content:center">Reset format</button>
+    </div>
+    <div id="toast"></div>
+    <input type="file" id="file" accept="image/*" hidden />
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
